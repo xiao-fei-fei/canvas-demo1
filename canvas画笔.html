@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+    body{background-color: #000;}
+    #oc{margin-left: 500px;}
+	</style>
+</head>
+<body>
+    <canvas id="oc" width="800" height="800"></canvas>
+    <button onclick="save()">保存</button>
+<script>
+    function save() {
+        var a = document.createElement('a')
+        a.href = oc.toDataURL("image/png")
+        a.download = '下载.png'
+        document.body.appendChild(a)
+        a.click()
+    }
+
+    var oc = document.querySelector('#oc');
+    var zxc = oc.getContext('2d');
+    zxc.fillStyle = "#fff";
+    zxc.fillRect(0, 0, 800, 800);
+    oc.onmousedown = function (e) {
+       var e = e || window.event;
+       var ox = e.clientX - oc.offsetLeft;
+       var oy = e.clientY - oc.offsetTop;
+       zxc.beginPath();
+       zxc.moveTo(ox,oy);
+       zxc.strokeStyle = '#'+parseInt(Math.random()*1000000);
+       oc.onmousemove = function (e) {
+          var e = e || window.event;
+          var ox = e.clientX - oc.offsetLeft;
+          var oy = e.clientY - oc.offsetTop;
+		  zxc.lineWidth = 4;
+          zxc.lineTo(ox,oy);
+          zxc.stroke();
+       };
+    };
+    document.onmouseup = function () {
+        oc.onmousemove =  null;
+    };
+</script>
+
+</body>
+</html>
